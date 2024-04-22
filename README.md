@@ -1,17 +1,4 @@
-# Final-Project-Tableau
+'This is a cleaned table of wildlife strikes from 2000-2015 in the United States. Visit the FAA Wildlife Strike Database which contains records of wildlife strikes reported by airlines, airports, pilots, and other sources.'
 
-## Project/Goals
-(fill in your description and goals here)
 
-## Process
-### (your step 1)
-### (your step 2)
-
-## Results
-(Fill in which Option you chose, either 1 or 2. List the dataset you selected for the project if you selected Option 2. Also, discuss the visualizations you created, and why. For Option 2, also identify what your data question was, and how you went through the prompts.)
-
-## Challenges 
-(discuss challenges you faced in the project)
-
-## Future Goals
-(what would you do if you had more time?)
+https://www.faa.gov/sites/faa.gov/files/Wildlife-Strike-Report-1990-2022.pdf
