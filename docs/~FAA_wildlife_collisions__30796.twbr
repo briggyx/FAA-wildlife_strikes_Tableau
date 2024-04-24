@@ -18,8 +18,9 @@
     <_.fcp.VConnDownstreamExtractsWithWarnings.true...VConnDownstreamExtractsWithWarnings />
     <WindowsPersistSimpleIdentifiers />
     <WorksheetBackgroundTransparency />
+    <ZoneBackgroundTransparency />
   </document-format-change-manifest>
-  <repository-location id='FAA_wildlife_collisions' path='/workbooks' revision='1.1' />
+  <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2?rev=1.0' id='FAA_wildlife_collisions' path='/workbooks' revision='1.4' />
   <preferences>
     <preference name='ui.encoding.shelf.height' value='24' />
     <preference name='ui.shelf.height' value='26' />
@@ -34,7 +35,7 @@
       <connection class='federated'>
         <named-connections>
           <named-connection caption='FAA_wildlife_strikes_cleaned' name='textscan.06nwi3q0d7c0331avwuxf0ug7fnu'>
-            <connection class='textscan' directory='C:/Users/brigi/OneDrive/Desktop/FAA-wildlife_strikes_Tableau/data' filename='FAA_wildlife_strikes_cleaned.csv' password='' server='' workgroup-auth-mode='as-is' />
+            <connection class='textscan' directory='C:/Users/brigi/OneDrive/Desktop/FAA-wildlife_strikes_Tableau/data' workgroup-auth-mode='as-is' />
           </named-connection>
         </named-connections>
         <_.fcp.ObjectModelEncapsulateLegacy.false...relation connection='textscan.06nwi3q0d7c0331avwuxf0ug7fnu' name='FAA_wildlife_strikes_cleaned.csv' table='[FAA_wildlife_strikes_cleaned#csv]' type='table'>
@@ -686,7 +687,9 @@
       <column-instance column='[Wildlife: Animal Category]' derivation='None' name='[none:Wildlife: Animal Category:nk]' pivot='key' type='nominal' />
       <column-instance column='[Wildlife: Species]' derivation='None' name='[none:Wildlife: Species:nk]' pivot='key' type='nominal' />
       <column-instance column='[latitude]' derivation='None' name='[none:latitude:ok]' pivot='key' type='ordinal' />
+      <column-instance column='[latitude]' derivation='None' name='[none:latitude:qk]' pivot='key' type='quantitative' />
       <column-instance column='[longitude]' derivation='None' name='[none:longitude:ok]' pivot='key' type='ordinal' />
+      <column-instance column='[longitude]' derivation='None' name='[none:longitude:qk]' pivot='key' type='quantitative' />
       <group caption='Action (Effect: Impact to flight)' hidden='true' name='[Action (Effect: Impact to flight)]' name-style='unqualified' user:auto-column='sheet_link'>
         <groupfilter function='crossjoin'>
           <groupfilter function='level-members' level='[Effect: Impact to flight]' />
@@ -709,8 +712,14 @@
           <groupfilter function='level-members' level='[Wildlife: Animal Category]' />
         </groupfilter>
       </group>
+      <group hidden='true' name='[Exclusions (Latitude,Longitude)]' name-style='unqualified' user:auto-column='exclude'>
+        <groupfilter function='crossjoin'>
+          <groupfilter function='level-members' level='[none:latitude:qk]' />
+          <groupfilter function='level-members' level='[none:longitude:qk]' />
+        </groupfilter>
+      </group>
       <extract _.fcp.ObjectModelExtractV2.true...object-id='' _.fcp.VConnDownstreamExtractsWithWarnings.true...user-specific='false' count='-1' enabled='true' units='records'>
-        <connection access_mode='readonly' authentication='auth-none' author-locale='en_US' class='hyper' dbname='C:/Users/brigi/OneDrive/Documents/My Tableau Repository/Datasources/FAA_wildlife_strikes_cleaned.hyper' default-settings='yes' schema='Extract' sslmode='' tablename='Extract' update-time='' username='tableau_internal_user'>
+        <connection access_mode='readonly' authentication='auth-none' author-locale='en_US' class='hyper' dbname='Data/Datasources/FAA_wildlife_strikes_cleaned.hyper' default-settings='yes' schema='Extract' sslmode='' tablename='Extract' update-time='' username=''>
           <_.fcp.ObjectModelEncapsulateLegacy.false...relation name='Extract' table='[Extract].[Extract]' type='table' />
           <_.fcp.ObjectModelEncapsulateLegacy.true...relation name='Extract' table='[Extract].[Extract]' type='table' />
           <metadata-records>
@@ -5086,6 +5095,14 @@
         <param name='target' value='economics_dashboard' />
       </command>
     </action>
+    <action caption='Filter 4 (generated)' name='[Action5_973F154EE7744D86AB48AB89F4FE4ECA]'>
+      <activation auto-clear='true' type='on-select' />
+      <source dashboard='Dashboard 3' type='sheet' worksheet='map' />
+      <command command='tsc:tsl-filter'>
+        <param name='special-fields' value='all' />
+        <param name='target' value='Dashboard 3' />
+      </command>
+    </action>
     <action caption='Filter 1 (generated) 1' name='[Action7_6B37F8901F9B41E0978700BDB043707E]'>
       <activation auto-clear='true' type='on-select' />
       <source dashboard='ecology_dashboard' type='sheet' worksheet='map' />
@@ -5100,10 +5117,11 @@
       <layout-options>
         <title>
           <formatted-text>
-            <run bold='true' fontname='Tableau Book' fontsize='10'>Cost of Collisions</run>
+            <run bold='true' fontalignment='1' fontsize='10'>Cost of Collisions</run>
           </formatted-text>
         </title>
       </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/Sheet11?rev=' id='99434744' path='/workbooks/FAA_wildlife_collisions2' revision='' />
       <table>
         <view>
           <datasources>
@@ -5195,6 +5213,7 @@
           </formatted-text>
         </title>
       </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/Sheet12?rev=' id='99434740' path='/workbooks/FAA_wildlife_collisions2' revision='' />
       <table>
         <view>
           <datasources>
@@ -5258,6 +5277,79 @@
       </table>
       <simple-id uuid='{1E5171A3-0ABE-44CC-A15C-22CD4A776E50}' />
     </worksheet>
+    <worksheet name='Sheet 13'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run bold='true' fontsize='10'>Airport</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='FAA_wildlife_strikes_cleaned' name='federated.0m1b2m81jcztom1c3dors05ahr5b' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0m1b2m81jcztom1c3dors05ahr5b'>
+            <column datatype='string' name='[Airport: Code]' role='dimension' type='nominal' />
+            <column datatype='string' name='[Airport: Name]' role='dimension' type='nominal' />
+            <column aggregation='Avg' caption='Latitude' datatype='real' name='[latitude]' role='measure' semantic-role='[Geographical].[Latitude]' type='quantitative' />
+            <column aggregation='Avg' caption='Longitude' datatype='real' name='[longitude]' role='measure' semantic-role='[Geographical].[Longitude]' type='quantitative' />
+            <column-instance column='[Airport: Code]' derivation='None' name='[none:Airport: Code:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Airport: Name]' derivation='None' name='[none:Airport: Name:nk]' pivot='key' type='nominal' />
+            <column-instance column='[latitude]' derivation='None' name='[none:latitude:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[longitude]' derivation='None' name='[none:longitude:ok]' pivot='key' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0m1b2m81jcztom1c3dors05ahr5b].[Action (Latitude,Longitude)]'>
+            <groupfilter function='crossjoin' user:ui-action-filter='[Action5_973F154EE7744D86AB48AB89F4FE4ECA]' user:ui-enumeration='all' user:ui-marker='enumerate'>
+              <groupfilter function='level-members' level='[none:latitude:ok]' />
+              <groupfilter function='level-members' level='[none:longitude:ok]' />
+            </groupfilter>
+          </filter>
+          <slices>
+            <column>[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]</column>
+            <column>[federated.0m1b2m81jcztom1c3dors05ahr5b].[Action (Latitude,Longitude)]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='cell'>
+            <format attr='width' value='264' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <text column='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Name:nk]' />
+            </encodings>
+            <customized-label>
+              <formatted-text>
+                <run fontsize='7'>&lt;</run>
+                <run fontsize='7'>[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Name:nk]</run>
+                <run fontsize='7'>&gt;</run>
+              </formatted-text>
+            </customized-label>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='true' />
+              </style-rule>
+              <style-rule element='pane'>
+                <format attr='minwidth' value='-1' />
+                <format attr='maxwidth' value='-1' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{5C17F3E1-CDEC-4BCA-A1EF-41C5CBDF6B99}' />
+    </worksheet>
     <worksheet name='Sheet 5'>
       <layout-options>
         <title>
@@ -5266,6 +5358,7 @@
           </formatted-text>
         </title>
       </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/Sheet5?rev=' id='99434739' path='/workbooks/FAA_wildlife_collisions2' revision='' />
       <table>
         <view>
           <datasources>
@@ -5369,6 +5462,7 @@
           </formatted-text>
         </title>
       </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/Sheet7?rev=' id='99434741' path='/workbooks/FAA_wildlife_collisions2' revision='' />
       <table>
         <view>
           <datasources>
@@ -5458,6 +5552,7 @@
           </formatted-text>
         </title>
       </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/Sheet8?rev=' id='99434742' path='/workbooks/FAA_wildlife_collisions2' revision='' />
       <table>
         <view>
           <datasources>
@@ -5535,6 +5630,7 @@
           </formatted-text>
         </title>
       </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/Sheet9?rev=' id='99434743' path='/workbooks/FAA_wildlife_collisions2' revision='' />
       <table>
         <view>
           <datasources>
@@ -5630,6 +5726,7 @@
           </formatted-text>
         </title>
       </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/distancefromairport?rev=' id='99434738' path='/workbooks/FAA_wildlife_collisions2' revision='' />
       <table>
         <view>
           <datasources>
@@ -5710,7 +5807,7 @@
             <mark-sizing mark-sizing-setting='marks-scaling-off' />
             <encodings>
               <color column='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Animal Category:qk]' />
-              <size column='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Wildlife: Animal Category:nk]' />
+              <size column='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Animal Category:qk]' />
               <text column='[federated.0m1b2m81jcztom1c3dors05ahr5b].[avg:km from airport:qk]' />
             </encodings>
             <customized-tooltip>
@@ -5777,6 +5874,7 @@
           </formatted-text>
         </title>
       </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/impactsbyyearandtetrapod?rev=' id='99434737' path='/workbooks/FAA_wildlife_collisions2' revision='' />
       <table>
         <view>
           <datasources>
@@ -5861,6 +5959,7 @@
           </formatted-text>
         </caption>
       </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/map?rev=' id='99434735' path='/workbooks/FAA_wildlife_collisions2' revision='' />
       <table>
         <view>
           <datasources>
@@ -5895,6 +5994,18 @@
           <filter class='categorical' column='[federated.0m1b2m81jcztom1c3dors05ahr5b].[Action (Tetrapod)]'>
             <groupfilter function='level-members' level='[Wildlife: Animal Category]' user:ui-action-filter='[Action5_E08559A2E80D4638B8B5A1D7039F4DA9]' user:ui-enumeration='all' user:ui-marker='enumerate' />
           </filter>
+          <filter class='categorical' column='[federated.0m1b2m81jcztom1c3dors05ahr5b].[Exclusions (Latitude,Longitude)]'>
+            <groupfilter function='except' user:ui-domain='database' user:ui-enumeration='exclusive' user:ui-marker='enumerate'>
+              <groupfilter function='crossjoin'>
+                <groupfilter function='level-members' level='[none:latitude:qk]' />
+                <groupfilter function='level-members' level='[none:longitude:qk]' />
+              </groupfilter>
+              <groupfilter function='crossjoin'>
+                <groupfilter function='member' level='[none:latitude:qk]' member='38.790999999999997' />
+                <groupfilter function='member' level='[none:longitude:qk]' member='-97.652199999999993' />
+              </groupfilter>
+            </groupfilter>
+          </filter>
           <filter class='quantitative' column='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:longitude:qk]' included-values='non-null' />
           <slices>
             <column>[federated.0m1b2m81jcztom1c3dors05ahr5b].[Action (Phase of flight,Time of Day)]</column>
@@ -5902,10 +6013,15 @@
             <column>[federated.0m1b2m81jcztom1c3dors05ahr5b].[Action (Tetrapod)]</column>
             <column>[federated.0m1b2m81jcztom1c3dors05ahr5b].[Action (Effect: Impact to flight)]</column>
             <column>[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]</column>
+            <column>[federated.0m1b2m81jcztom1c3dors05ahr5b].[Exclusions (Latitude,Longitude)]</column>
           </slices>
           <aggregation value='true' />
         </view>
         <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' field='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:longitude:qk]' field-type='quantitative' max='-7037437.8744644588' min='-15287630.696289755' projection='EPSG:3857' range-type='fixed' scope='cols' type='space' />
+            <encoding attr='space' class='0' field='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:latitude:qk]' field-type='quantitative' max='6715512.4734708145' min='2671618.7090918953' projection='EPSG:3857' range-type='fixed' scope='rows' type='space' />
+          </style-rule>
           <style-rule element='mark'>
             <encoding attr='color' field='[federated.0m1b2m81jcztom1c3dors05ahr5b].[sum:Cost: Total $:qk]' num-steps='5' type='custom-interpolated'>
               <color-palette custom='true' name='' type='ordered-sequential'>
@@ -5962,6 +6078,7 @@
           </formatted-text>
         </title>
       </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/timeandphaseofimpact?rev=' id='99434736' path='/workbooks/FAA_wildlife_collisions2' revision='' />
       <table>
         <view>
           <datasources>
@@ -6037,9 +6154,9 @@
             </format>
           </style-rule>
           <style-rule element='quick-filter'>
-            <format attr='title' field='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]' value='Airport'>
+            <format attr='title' field='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]' value='Filter By Airport'>
               <formatted-text>
-                <run>Airport</run>
+                <run>Filter By Airport</run>
               </formatted-text>
             </format>
           </style-rule>
@@ -6083,16 +6200,9 @@
     </worksheet>
   </worksheets>
   <dashboards>
-    <dashboard _.fcp.AccessibleZoneTabOrder.true...enable-sort-zone-taborder='true' name='ecology_dashboard'>
-      <layout-options>
-        <title>
-          <formatted-text>
-            <run bold='true' fontalignment='1'>Ecological Effects of Aircraft-Wildlife Collisions in the Continental U.S. (2000-2019)</run>
-          </formatted-text>
-        </title>
-      </layout-options>
+    <dashboard _.fcp.AccessibleZoneTabOrder.true...enable-sort-zone-taborder='true' name='Dashboard 3'>
       <style />
-      <size maxheight='768' maxwidth='1024' minheight='768' minwidth='1024' preset-index='2' sizing-mode='fixed' />
+      <size maxheight='800' maxwidth='1000' minheight='800' minwidth='1000' />
       <datasources>
         <datasource caption='FAA_wildlife_strikes_cleaned' name='federated.0m1b2m81jcztom1c3dors05ahr5b' />
       </datasources>
@@ -6101,14 +6211,104 @@
         <column-instance column='[Airport: Code]' derivation='None' name='[none:Airport: Code:nk]' pivot='key' type='nominal' />
       </datasource-dependencies>
       <zones>
+        <zone h='100000' id='4' type-v2='layout-basic' w='100000' x='0' y='0'>
+          <zone h='98000' id='7' param='horz' type-v2='layout-flow' w='98400' x='800' y='1000'>
+            <zone h='98000' id='5' type-v2='layout-basic' w='82400' x='800' y='1000' />
+            <zone fixed-size='160' h='98000' id='6' is-fixed='true' param='vert' type-v2='layout-flow' w='16000' x='83200' y='1000'>
+              <zone h='98000' id='8' name='Sheet 13' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]' type-v2='filter' w='16000' x='83200' y='1000'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+            </zone>
+          </zone>
+          <zone-style>
+            <format attr='border-color' value='#000000' />
+            <format attr='border-style' value='none' />
+            <format attr='border-width' value='0' />
+            <format attr='margin' value='8' />
+          </zone-style>
+        </zone>
+        <zone h='29000' id='3' name='Sheet 13' w='41200' x='3300' y='4125' />
+        <zone h='33250' id='9' name='map' w='33300' x='26300' y='34125' />
+        <zone h='9500' id='10' name='map' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[sum:Cost: Total $:qk]' type-v2='color' w='14000' x='59600' y='34125' />
+      </zones>
+      <devicelayouts>
+        <devicelayout auto-generated='true' name='Phone'>
+          <size maxheight='700' minheight='700' sizing-mode='vscroll' />
+          <zones>
+            <zone h='100000' id='26' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='84000' id='25' param='vert' type-v2='layout-flow' w='84000' x='8000' y='8000'>
+                <zone h='98000' id='8' mode='checkdropdown' name='Sheet 13' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]' type-v2='filter' w='16000' x='83200' y='1000'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='232' h='29000' id='3' is-fixed='true' name='Sheet 13' w='41200' x='3300' y='4125'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='266' h='33250' id='9' is-fixed='true' name='map' w='33300' x='26300' y='34125'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+                <zone h='9500' id='10' name='map' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[sum:Cost: Total $:qk]' type-v2='color' w='14000' x='59600' y='34125'>
+                  <zone-style>
+                    <format attr='border-color' value='#000000' />
+                    <format attr='border-style' value='none' />
+                    <format attr='border-width' value='0' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                  </zone-style>
+                </zone>
+              </zone>
+              <zone-style>
+                <format attr='border-color' value='#000000' />
+                <format attr='border-style' value='none' />
+                <format attr='border-width' value='0' />
+                <format attr='margin' value='8' />
+              </zone-style>
+            </zone>
+          </zones>
+        </devicelayout>
+      </devicelayouts>
+      <simple-id uuid='{6CF255E6-CE50-41B1-B25D-70078AD8DD17}' />
+    </dashboard>
+    <dashboard _.fcp.AccessibleZoneTabOrder.true...enable-sort-zone-taborder='true' name='ecology_dashboard'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run bold='true' fontalignment='1'>Ecological Effects of Aircraft-Wildlife Collisions in the Continental U.S. (2000-2019)</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/ecology_dashboard?rev=' id='99434746' path='/workbooks/FAA_wildlife_collisions2' revision='' />
+      <style />
+      <size maxheight='768' maxwidth='1024' minheight='768' minwidth='1024' preset-index='2' sizing-mode='fixed' />
+      <zones>
         <zone h='100000' id='53' type-v2='layout-basic' w='100000' x='0' y='0'>
           <zone h='100000' id='56' param='vert' type-v2='layout-flow' w='100000' x='0' y='0'>
             <zone fixed-size='968' h='100000' id='18' is-fixed='true' param='vert' type-v2='layout-flow' w='100000' x='0' y='0'>
               <zone h='98958' id='68' param='horz' type-v2='layout-flow' w='99218' x='391' y='521'>
                 <zone h='98958' id='69' param='vert' type-v2='layout-flow' w='99218' x='391' y='521'>
-                  <zone h='98958' id='70' param='vert' type-v2='layout-flow' w='99218' x='391' y='521'>
-                    <zone h='98958' id='71' param='vert' type-v2='layout-flow' w='99218' x='391' y='521' />
-                  </zone>
+                  <zone h='98958' id='71' param='vert' type-v2='layout-flow' w='99218' x='391' y='521' />
                 </zone>
               </zone>
               <zone-style>
@@ -6139,22 +6339,12 @@
             <format attr='background-color' value='#ffffff' />
           </zone-style>
         </zone>
-        <zone fixed-size='181' h='11589' id='31' is-fixed='true' name='Sheet 9' w='26758' x='71777' y='14714'>
+        <zone fixed-size='181' h='10286' id='31' is-fixed='true' name='Sheet 9' w='26758' x='71973' y='17448'>
           <layout-cache fixed-size-w='302' type-h='fixed' type-w='fixed' />
           <zone-style>
             <format attr='border-color' value='#e6e6e6' />
             <format attr='border-style' value='solid' />
             <format attr='border-width' value='1' />
-            <format attr='background-color' value='#ffffff' />
-          </zone-style>
-        </zone>
-        <zone fixed-size='62' h='7031' id='23' is-fixed='true' mode='checkdropdown' name='Sheet 9' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]' type-v2='filter' w='27344' x='71387' y='7682'>
-          <zone-style>
-            <format attr='border-color' value='#e6e6e6' />
-            <format attr='border-style' value='solid' />
-            <format attr='border-width' value='1' />
-            <format attr='margin' value='3' />
-            <format attr='padding' value='3' />
             <format attr='background-color' value='#ffffff' />
           </zone-style>
         </zone>
@@ -6197,7 +6387,7 @@
             <format attr='background-color' value='#ffffff' />
           </zone-style>
         </zone>
-        <zone h='8724' id='77' name='distancefromairport' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Animal Category:qk]' type-v2='color' w='26660' x='71875' y='26823'>
+        <zone h='7161' id='77' name='distancefromairport' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Animal Category:qk]' type-v2='color' w='26660' x='71875' y='28385'>
           <zone-style>
             <format attr='border-color' value='#e6e6e6' />
             <format attr='border-style' value='solid' />
@@ -6229,6 +6419,14 @@
             <format attr='background-color' value='#ffffff' />
           </zone-style>
         </zone>
+        <zone h='8594' id='108' name='Sheet 13' w='26465' x='71973' y='8073'>
+          <zone-style>
+            <format attr='border-color' value='#e6e6e6' />
+            <format attr='border-style' value='solid' />
+            <format attr='border-width' value='1' />
+            <format attr='background-color' value='#ffffff' />
+          </zone-style>
+        </zone>
       </zones>
       <devicelayouts>
         <devicelayout auto-generated='true' name='Phone'>
@@ -6241,8 +6439,8 @@
           </layout-options>
           <size maxheight='1700' minheight='1700' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='101' type-v2='layout-basic' w='100000' x='0' y='0'>
-              <zone h='97916' id='100' param='vert' type-v2='layout-flow' w='98438' x='781' y='1042'>
+            <zone h='100000' id='118' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='97916' id='117' param='vert' type-v2='layout-flow' w='98438' x='781' y='1042'>
                 <zone h='5469' id='57' type-v2='title' w='97168' x='1270' y='1823'>
                   <zone-style>
                     <format attr='border-color' value='#bab0ac' />
@@ -6280,7 +6478,7 @@
                     <format attr='background-color' value='#ffffff' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='62' h='7031' id='23' mode='checkdropdown' name='Sheet 9' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]' type-v2='filter' w='27344' x='71387' y='7682'>
+                <zone fixed-size='64' h='8594' id='108' is-fixed='true' name='Sheet 13' w='26465' x='71973' y='8073'>
                   <zone-style>
                     <format attr='border-color' value='#e6e6e6' />
                     <format attr='border-style' value='solid' />
@@ -6290,7 +6488,7 @@
                     <format attr='background-color' value='#ffffff' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='87' h='11589' id='31' is-fixed='true' name='Sheet 9' w='26758' x='71777' y='14714'>
+                <zone fixed-size='77' h='10286' id='31' is-fixed='true' name='Sheet 9' w='26758' x='71973' y='17448'>
                   <layout-cache fixed-size-w='302' type-h='fixed' type-w='fixed' />
                   <zone-style>
                     <format attr='border-color' value='#e6e6e6' />
@@ -6341,7 +6539,7 @@
                     <format attr='background-color' value='#ffffff' />
                   </zone-style>
                 </zone>
-                <zone h='8724' id='77' name='distancefromairport' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Animal Category:qk]' type-v2='color' w='26660' x='71875' y='26823'>
+                <zone h='7161' id='77' name='distancefromairport' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Animal Category:qk]' type-v2='color' w='26660' x='71875' y='28385'>
                   <zone-style>
                     <format attr='border-color' value='#e6e6e6' />
                     <format attr='border-style' value='solid' />
@@ -6383,6 +6581,7 @@
           </formatted-text>
         </title>
       </layout-options>
+      <repository-location derived-from='https://vizhub/workbooks/FAA_wildlife_collisions2/economics_dashboard?rev=' id='99434745' path='/workbooks/FAA_wildlife_collisions2' revision='' />
       <style />
       <size maxheight='768' maxwidth='1024' minheight='768' minwidth='1024' preset-index='2' sizing-mode='fixed' />
       <datasources>
@@ -6396,6 +6595,17 @@
         <zone h='100000' id='53' type-v2='layout-basic' w='100000' x='0' y='0'>
           <zone h='100000' id='56' param='vert' type-v2='layout-flow' w='100000' x='0' y='0'>
             <zone fixed-size='968' h='100000' id='18' is-fixed='true' param='vert' type-v2='layout-flow' w='100000' x='0' y='0'>
+              <zone h='98958' id='86' param='horz' type-v2='layout-flow' w='99218' x='391' y='521'>
+                <zone h='98958' id='88' param='vert' type-v2='layout-flow' w='99218' x='391' y='521'>
+                  <zone h='98958' id='90' param='horz' type-v2='layout-flow' w='99218' x='391' y='521'>
+                    <zone h='98958' id='94' param='vert' type-v2='layout-flow' w='99218' x='391' y='521'>
+                      <zone h='98958' id='97' param='horz' type-v2='layout-flow' w='99218' x='391' y='521'>
+                        <zone h='98958' id='98' param='vert' type-v2='layout-flow' w='99218' x='391' y='521' />
+                      </zone>
+                    </zone>
+                  </zone>
+                </zone>
+              </zone>
               <zone-style>
                 <format attr='border-color' value='#000000' />
                 <format attr='border-style' value='none' />
@@ -6457,7 +6667,7 @@
             <format attr='background-color' value='#ffffff' />
           </zone-style>
         </zone>
-        <zone h='11458' id='34' name='Sheet 11' w='26074' x='71875' y='60286'>
+        <zone h='14453' id='34' name='Sheet 11' w='26074' x='72070' y='57161'>
           <layout-cache fixed-size-w='80' type-h='fixed' type-w='fixed' />
           <zone-style>
             <format attr='border-color' value='#e6e6e6' />
@@ -6466,16 +6676,7 @@
             <format attr='background-color' value='#ffffff' />
           </zone-style>
         </zone>
-        <zone fixed-size='181' h='11589' id='31' is-fixed='true' name='Sheet 9' w='25781' x='71973' y='47396'>
-          <layout-cache fixed-size-w='302' type-h='fixed' type-w='fixed' />
-          <zone-style>
-            <format attr='border-color' value='#e6e6e6' />
-            <format attr='border-style' value='solid' />
-            <format attr='border-width' value='1' />
-            <format attr='background-color' value='#ffffff' />
-          </zone-style>
-        </zone>
-        <zone h='10286' id='20' name='map' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[sum:Cost: Total $:qk]' type-v2='color' w='26172' x='71777' y='25781'>
+        <zone h='10286' id='20' name='map' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[sum:Cost: Total $:qk]' type-v2='color' w='25977' x='71973' y='26302'>
           <zone-style>
             <format attr='border-color' value='#e6e6e6' />
             <format attr='border-style' value='solid' />
@@ -6485,7 +6686,7 @@
             <format attr='background-color' value='#ffffff' />
           </zone-style>
         </zone>
-        <zone h='9505' id='29' name='Sheet 7' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Effect: Impact to flight:qk]' type-v2='color' w='26367' x='71680' y='36849'>
+        <zone h='9505' id='29' name='Sheet 7' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Effect: Impact to flight:qk]' type-v2='color' w='26172' x='71777' y='46875'>
           <zone-style>
             <format attr='border-color' value='#e6e6e6' />
             <format attr='border-style' value='solid' />
@@ -6495,7 +6696,7 @@
             <format attr='background-color' value='#ffffff' />
           </zone-style>
         </zone>
-        <zone fixed-size='62' h='7031' id='23' is-fixed='true' mode='checkdropdown' name='timeandphaseofimpact' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]' type-v2='filter' w='25977' x='71875' y='7682'>
+        <zone fixed-size='62' h='7031' id='23' is-fixed='true' mode='checkdropdown' name='timeandphaseofimpact' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]' show-apply='true' type-v2='filter' values='relevant' w='25977' x='71777' y='7682'>
           <zone-style>
             <format attr='border-color' value='#e6e6e6' />
             <format attr='border-style' value='solid' />
@@ -6505,7 +6706,7 @@
             <format attr='background-color' value='#ffffff' />
           </zone-style>
         </zone>
-        <zone fixed-size='49' h='9505' id='24' is-fixed='true' name='timeandphaseofimpact' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Species ID:qk]' type-v2='color' w='25879' x='71973' y='15365'>
+        <zone fixed-size='49' h='9505' id='24' is-fixed='true' name='timeandphaseofimpact' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Species ID:qk]' type-v2='color' w='25879' x='71973' y='36849'>
           <zone-style>
             <format attr='border-color' value='#000000' />
             <format attr='border-style' value='none' />
@@ -6538,6 +6739,14 @@
             <format attr='background-color' value='#ffffff' />
           </zone-style>
         </zone>
+        <zone h='10156' id='99' name='Sheet 13' w='25391' x='72168' y='15755'>
+          <zone-style>
+            <format attr='border-color' value='#e6e6e6' />
+            <format attr='border-style' value='solid' />
+            <format attr='border-width' value='1' />
+            <format attr='background-color' value='#ffffff' />
+          </zone-style>
+        </zone>
       </zones>
       <devicelayouts>
         <devicelayout auto-generated='true' name='Phone'>
@@ -6548,10 +6757,10 @@
               </formatted-text>
             </title>
           </layout-options>
-          <size maxheight='1500' minheight='1500' sizing-mode='vscroll' />
+          <size maxheight='1550' minheight='1550' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='85' type-v2='layout-basic' w='100000' x='0' y='0'>
-              <zone h='97916' id='84' param='vert' type-v2='layout-flow' w='98438' x='781' y='1042'>
+            <zone h='100000' id='115' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='97916' id='114' param='vert' type-v2='layout-flow' w='98438' x='781' y='1042'>
                 <zone h='5469' id='57' type-v2='title' w='96289' x='1270' y='1823'>
                   <zone-style>
                     <format attr='border-color' value='#bab0ac' />
@@ -6573,7 +6782,7 @@
                     <format attr='background-color' value='#ffffff' />
                   </zone-style>
                 </zone>
-                <zone h='10286' id='20' name='map' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[sum:Cost: Total $:qk]' type-v2='color' w='26172' x='71777' y='25781'>
+                <zone h='10286' id='20' name='map' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[sum:Cost: Total $:qk]' type-v2='color' w='25977' x='71973' y='26302'>
                   <zone-style>
                     <format attr='border-color' value='#e6e6e6' />
                     <format attr='border-style' value='solid' />
@@ -6590,6 +6799,16 @@
                     <run bold='true' fontsize='10'>The data spans from 2000-2019, and is from the FAA: </run>
                     <run auto-url='true' fontcolor='#0000ff' fontname='Benton Sans Book' fontsize='10' hyperlink='tabdoc:load-url url=&amp;quot;Wildlife Hazard Mitigation | Federal Aviation Administration (faa.gov)&amp;quot;' underline='true'>Wildlife Hazard Mitigation | Federal Aviation Administration (faa.gov)</run>
                   </formatted-text>
+                  <zone-style>
+                    <format attr='border-color' value='#e6e6e6' />
+                    <format attr='border-style' value='solid' />
+                    <format attr='border-width' value='1' />
+                    <format attr='margin' value='4' />
+                    <format attr='padding' value='0' />
+                    <format attr='background-color' value='#ffffff' />
+                  </zone-style>
+                </zone>
+                <zone fixed-size='76' h='10156' id='99' is-fixed='true' name='Sheet 13' w='25391' x='72168' y='15755'>
                   <zone-style>
                     <format attr='border-color' value='#e6e6e6' />
                     <format attr='border-style' value='solid' />
@@ -6621,7 +6840,7 @@
                     <format attr='background-color' value='#ffffff' />
                   </zone-style>
                 </zone>
-                <zone h='9505' id='29' name='Sheet 7' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Effect: Impact to flight:qk]' type-v2='color' w='26367' x='71680' y='36849'>
+                <zone h='9505' id='29' name='Sheet 7' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Effect: Impact to flight:qk]' type-v2='color' w='26172' x='71777' y='46875'>
                   <zone-style>
                     <format attr='border-color' value='#e6e6e6' />
                     <format attr='border-style' value='solid' />
@@ -6631,18 +6850,7 @@
                     <format attr='background-color' value='#ffffff' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='87' h='11589' id='31' is-fixed='true' name='Sheet 9' w='25781' x='71973' y='47396'>
-                  <layout-cache fixed-size-w='302' type-h='fixed' type-w='fixed' />
-                  <zone-style>
-                    <format attr='border-color' value='#e6e6e6' />
-                    <format attr='border-style' value='solid' />
-                    <format attr='border-width' value='1' />
-                    <format attr='margin' value='4' />
-                    <format attr='padding' value='0' />
-                    <format attr='background-color' value='#ffffff' />
-                  </zone-style>
-                </zone>
-                <zone fixed-size='86' h='11458' id='34' is-fixed='true' name='Sheet 11' w='26074' x='71875' y='60286'>
+                <zone fixed-size='109' h='14453' id='34' is-fixed='true' name='Sheet 11' w='26074' x='72070' y='57161'>
                   <layout-cache fixed-size-w='80' type-h='fixed' type-w='fixed' />
                   <zone-style>
                     <format attr='border-color' value='#e6e6e6' />
@@ -6653,7 +6861,7 @@
                     <format attr='background-color' value='#ffffff' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='62' h='7031' id='23' mode='checkdropdown' name='timeandphaseofimpact' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]' type-v2='filter' w='25977' x='71875' y='7682'>
+                <zone fixed-size='62' h='7031' id='23' mode='checkdropdown' name='timeandphaseofimpact' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]' show-apply='true' type-v2='filter' values='relevant' w='25977' x='71777' y='7682'>
                   <zone-style>
                     <format attr='border-color' value='#e6e6e6' />
                     <format attr='border-style' value='solid' />
@@ -6674,7 +6882,7 @@
                     <format attr='background-color' value='#ffffff' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='49' h='9505' id='24' name='timeandphaseofimpact' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Species ID:qk]' type-v2='color' w='25879' x='71973' y='15365'>
+                <zone fixed-size='49' h='9505' id='24' name='timeandphaseofimpact' pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Species ID:qk]' type-v2='color' w='25879' x='71973' y='36849'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -6785,7 +6993,7 @@
     <window class='worksheet' name='distancefromairport'>
       <cards>
         <edge name='left'>
-          <strip size='160'>
+          <strip size='247'>
             <card type='pages' />
             <card type='filters' />
             <card type='marks' />
@@ -6804,7 +7012,7 @@
         </edge>
         <edge name='right'>
           <strip size='160'>
-            <card pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Wildlife: Animal Category:nk]' type='size' />
+            <card pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Animal Category:qk]' type='size' />
             <card pane-specification-id='0' param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[cnt:Wildlife: Animal Category:qk]' type='color' />
           </strip>
         </edge>
@@ -6965,14 +7173,42 @@
       </cards>
       <simple-id uuid='{FB2F1D1C-209F-4AAA-B300-2CCE33E1C8F0}' />
     </window>
-    <window class='dashboard' maximized='true' name='economics_dashboard'>
+    <window class='worksheet' name='Sheet 13'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card param='[federated.0m1b2m81jcztom1c3dors05ahr5b].[none:Airport: Code:nk]' type='filter' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{22723D38-8B36-4DEE-BEE0-C20E54B309DF}' />
+    </window>
+    <window class='dashboard' name='economics_dashboard'>
       <viewpoints>
         <viewpoint name='Sheet 11' />
+        <viewpoint name='Sheet 13' />
         <viewpoint name='Sheet 7' />
         <viewpoint name='Sheet 8'>
           <zoom type='entire-view' />
         </viewpoint>
-        <viewpoint name='Sheet 9' />
         <viewpoint name='map'>
           <zoom type='entire-view' />
         </viewpoint>
@@ -6981,11 +7217,12 @@
       <active id='-1' />
       <simple-id uuid='{90D0A136-9C5E-4830-8739-E8B2DA9C0088}' />
     </window>
-    <window class='dashboard' name='ecology_dashboard'>
+    <window class='dashboard' maximized='true' name='ecology_dashboard'>
       <viewpoints>
         <viewpoint name='Sheet 12'>
           <zoom type='entire-view' />
         </viewpoint>
+        <viewpoint name='Sheet 13' />
         <viewpoint name='Sheet 5' />
         <viewpoint name='Sheet 9' />
         <viewpoint name='distancefromairport' />
@@ -6998,6 +7235,16 @@
       </viewpoints>
       <active id='-1' />
       <simple-id uuid='{29804579-5F0C-4133-B6FB-43767ADBBF37}' />
+    </window>
+    <window class='dashboard' name='Dashboard 3'>
+      <viewpoints>
+        <viewpoint name='Sheet 13' />
+        <viewpoint name='map'>
+          <zoom type='entire-view' />
+        </viewpoint>
+      </viewpoints>
+      <active id='-1' />
+      <simple-id uuid='{854F5665-40E0-4857-8336-7064BB0EB448}' />
     </window>
   </windows>
 </workbook>
