@@ -33,6 +33,7 @@ This dashboard explores the economic consequences of wildlife collisions, focusi
 
 ## Dashboard 2:
 ### [Interactive dashboard 2](https://public.tableau.com/views/FAA_wildlife_collisions/ecology_dashboard?:language=en-US&publish=yes&:sid=&:display_count=n&:origin=viz_share_link)
+
 ![Ecology Dashboard](docs\images\ecology_dashboard.png)
 
 This dashboard delves into the ecological repercussions of aircraft-wildlife collisions, showcasing the distribution of impacts across tetrapod species, collision occurrences by date and time of day relative to tetrapods, and the average distance of impacts from airports categorized by tetrapods.
